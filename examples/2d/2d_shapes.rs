@@ -1,7 +1,9 @@
 //! Shows how to render simple primitive shapes with a single color.
+//! 展示如何使用单一颜色渲染简单的原始形状。
 //!
 //! You can toggle wireframes with the space bar except on wasm. Wasm does not support
 //! `POLYGON_MODE_LINE` on the gpu.
+//! 除了在 wasm 上，你可以通过空格键切换线框模式。Wasm 不支持 GPU 上的 `POLYGON_MODE_LINE`。
 
 use bevy::prelude::*;
 #[cfg(not(target_arch = "wasm32"))]
@@ -49,6 +51,7 @@ fn setup(
 
     for (i, shape) in shapes.into_iter().enumerate() {
         // Distribute colors evenly across the rainbow.
+        // 在彩虹色中均匀分布颜色。
         let color = Color::hsl(360. * i as f32 / num_shapes as f32, 0.95, 0.7);
 
         commands.spawn((
@@ -56,6 +59,7 @@ fn setup(
             MeshMaterial2d(materials.add(color)),
             Transform::from_xyz(
                 // Distribute shapes from -X_EXTENT/2 to +X_EXTENT/2.
+                // 将形状从 -X_EXTENT/2 分布到 +X_EXTENT/2。
                 -X_EXTENT / 2. + i as f32 / (num_shapes - 1) as f32 * X_EXTENT,
                 0.0,
                 0.0,

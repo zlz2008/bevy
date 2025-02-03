@@ -1,4 +1,5 @@
 //! Illustrates bloom post-processing in 2d.
+//! 展示 2D 中的泛光后处理效果。
 
 use bevy::{
     core_pipeline::{
@@ -26,18 +27,23 @@ fn setup(
         Camera2d,
         Camera {
             hdr: true, // 1. HDR is required for bloom
+            // 1. 泛光需要 HDR
             clear_color: ClearColorConfig::Custom(Color::BLACK),
             ..default()
         },
         Tonemapping::TonyMcMapface, // 2. Using a tonemapper that desaturates to white is recommended
+        // 2. 推荐使用一种会去饱和到白色的色调映射器
         Bloom::default(),           // 3. Enable bloom for the camera
+        // 3. 为相机启用泛光
         DebandDither::Enabled,      // Optional: bloom causes gradients which cause banding
+        // 可选：泛光会导致渐变，从而产生条带
     ));
 
     // Sprite
     commands.spawn(Sprite {
         image: asset_server.load("branding/bevy_bird_dark.png"),
         color: Color::srgb(5.0, 5.0, 5.0), // 4. Put something bright in a dark environment to see the effect
+        // 4. 在黑暗环境中放置一些明亮的东西以查看效果
         custom_size: Some(Vec2::splat(160.0)),
         ..default()
     });
@@ -46,6 +52,7 @@ fn setup(
     commands.spawn((
         Mesh2d(meshes.add(Circle::new(100.))),
         // 4. Put something bright in a dark environment to see the effect
+        // 4. 在黑暗环境中放置一些明亮的东西以查看效果
         MeshMaterial2d(materials.add(Color::srgb(7.5, 0.0, 7.5))),
         Transform::from_translation(Vec3::new(-200., 0., 0.)),
     ));
@@ -54,6 +61,7 @@ fn setup(
     commands.spawn((
         Mesh2d(meshes.add(RegularPolygon::new(100., 6))),
         // 4. Put something bright in a dark environment to see the effect
+        // 4. 在黑暗环境中放置一些明亮的东西以查看效果
         MeshMaterial2d(materials.add(Color::srgb(6.25, 9.4, 9.1))),
         Transform::from_translation(Vec3::new(200., 0., 0.)),
     ));
